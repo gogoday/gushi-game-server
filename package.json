@@ -1,0 +1,26 @@
+{
+  "name": "gushi-game-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./functions/**/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gogoday/gushi-game-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gogoday/gushi-game-server/issues"
+  },
+  "homepage": "https://github.com/gogoday/gushi-game-server#readme",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^8.4.0",
+    "mochawesome": "^6.2.2",
+    "sinon": "^11.0.0"
+  }
+}
