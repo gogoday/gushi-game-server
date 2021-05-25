@@ -80,7 +80,7 @@ function handleWorld(words) {
     }
   }
 
-  words.deleteWolds = deleteWolds.slice();
+  // words.deleteWolds = deleteWolds.slice();
   words.wrongSort = deleteWolds.shuffle();
 
   delete words.id;
