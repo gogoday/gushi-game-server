@@ -1,6 +1,19 @@
 
 const https = require('https');
 
+Array.prototype.shuffle = function() {
+  var array = this;
+  var m = array.length,
+      t, i;
+  while (m) {
+      i = Math.floor(Math.random() * m--);
+      t = array[m];
+      array[m] = array[i];
+      array[i] = t;
+  }
+  return array;
+}
+
 const numMap = {
   song: [0, 254],
   tang: [0, 57],
@@ -55,9 +68,11 @@ function handleWorld(words) {
     })
     return arr;
   }, [])
+
   let length = 0;
-  for (let i, l = words.paragraphs.length; i < l; i++) {
+  for (let i = 0, l = words.paragraphs.length; i < l; i++) {
     const item = words.paragraphs[i];
+    // console.log(`length: ${length}, item.length: ${item.length}`)
     if (length === 0) {
       length = item.length;
     } else if (length != item.length) {
@@ -65,7 +80,9 @@ function handleWorld(words) {
     }
   }
 
-  words.deleteWolds = deleteWolds;
+  words.deleteWolds = deleteWolds.slice();
+  words.wrongSort = deleteWolds.shuffle();
+
   delete words.id;
 
   // 增加一些混淆的字
