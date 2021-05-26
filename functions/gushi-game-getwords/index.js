@@ -100,22 +100,30 @@ function handleWorld(words) {
 
 
 exports.main = async (event, context) => {
-  const { userId } = event.queryStringParameters;
+  if (!event.body) {
+    return { ret: 2 }
+  }
+  const { userId } = JSON.parse(event.body);
+  if (!userId) {
+    return { ret: 3 }
+  }
   const url = getRandomUrl();
   const result = await getDataFromUrl(url);
   const words = this.getARandomWordFromArrayList(result);
   const handleResult = handleWorld(words);
 
+  const create_time = Date.now();
+  words.create_time = create_time;
+
   const record = {
     userId,
-    create_time: Date.now(),
     ...words,
   }
   console.log(record)
   const res = await db.collection('gushi')
     .add(record)
   delete words.deleteWolds;
-  
+
   return handleResult ? {
     ret: 0,
     data: words
