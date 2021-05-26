@@ -13,7 +13,7 @@ exports.main = async (event, context) => {
   })
   .then((res) => {
     // fileContent 类型为 Buffer
-    return res.fileContent.toString('utf-8');
+    return JSON.parse(res.fileContent.toString('utf-8'));
   });
   return content;
 }

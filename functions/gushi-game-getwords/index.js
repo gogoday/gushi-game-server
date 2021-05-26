@@ -35,6 +35,22 @@ function getRandomUrl() {
   return `https://raw.githubusercontent.com/gogoday/chinese-poetry/master/json/poet.${type}.${index}000.json`
 }
 
+async function getDataFromFileSys() {
+  const type = typeMap[(Math.random() * 10 > 5) ? 1 : 0];
+  const range = numMap[type];
+  const index = Math.round(Math.random() * range[1])
+
+  const content = await app
+  .downloadFile({
+    fileID: `cloud://hello-cloudbase-1gjrribi96ea328d.6865-hello-cloudbase-1gjrribi96ea328d-1251036730/json/poet.${type}.${index}000.json`
+  })
+  .then((res) => {
+    // fileContent 类型为 Buffer
+    return JSON.parse(res.fileContent.toString('utf-8'));
+  });
+  return content;
+}
+
 async function getDataFromUrl(url) {
   return new Promise((resolve, reject) => {
     https.get(url, (res) => {
@@ -107,9 +123,9 @@ exports.main = async (event, context) => {
   if (!userId) {
     return { ret: 3 }
   }
-  const url = getRandomUrl();
+  // const url = getRandomUrl();
   const start = performance.now();
-  const result = await getDataFromUrl(url);
+  const result = await getDataFromFileSys();
   console.info(`get data cost: ${performance.now() - start} ms`);
   const words = this.getARandomWordFromArrayList(result);
   const handleResult = handleWorld(words);
