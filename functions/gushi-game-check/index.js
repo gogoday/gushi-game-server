@@ -12,6 +12,7 @@ exports.getDataFromDb = async (dbIns, userId, create_time) => {
     create_time,
   })
   .get();
+  return res;
 }
 
 exports.main = async (event, context) => {
@@ -23,6 +24,7 @@ exports.main = async (event, context) => {
   if (!userId || !create_time || !select) {
     return { ret: 3}
   }
+  console.log(`params: ${JSON.stringify({userId, select, create_time})}`);
   const res = await this.getDataFromDb(db, userId, create_time);
   
   console.log(res);
