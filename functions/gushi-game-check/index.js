@@ -5,6 +5,15 @@ const app = cloudbase.init({})
 // 1. 获取数据库引用
 var db = app.database()
 
+exports.getDataFromDb = async (dbIns, userId, create_time) => {
+  const res = await dbIns.collection('gushi')
+  .where({
+    userId,
+    create_time,
+  })
+  .get();
+}
+
 exports.main = async (event, context) => {
   if (!event.body) {
     return { ret: 2 }
@@ -14,13 +23,10 @@ exports.main = async (event, context) => {
   if (!userId || !create_time || !select) {
     return { ret: 3}
   }
-  const res = await db.collection('gushi')
-    .where({
-      userId,
-      create_time,
-    })
-    .get();
-  const data = res.root && res.root.data;
+  const res = await this.getDataFromDb(db, userId, create_time);
+  
+  console.log(res);
+  const data = res.data;
   if (!data) {
     return {
       ret: 5,
