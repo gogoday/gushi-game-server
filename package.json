@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./functions/**/*.test.js"
+    "test": "mocha ./functions/**/*.test.js",
+    "publish:gushi-game-getwords": "cloudbase fn deploy gushi-game-getwords -e hello-cloudbase-1gjrribi96ea328d",
+    "publish:gushi-game-check": "cloudbase fn deploy gushi-game-check -e hello-cloudbase-1gjrribi96ea328d"
   },
   "repository": {
     "type": "git",

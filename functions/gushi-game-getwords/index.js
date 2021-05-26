@@ -32,7 +32,7 @@ function getRandomUrl() {
   const type = typeMap[(Math.random() * 10 > 5) ? 1 : 0];
   const range = numMap[type];
   const index = Math.round(Math.random() * range[1])
-  return `https://raw.githubusercontent.com/gogoday/chinese-poetry/master/json/poet.${type}.${index}000.json`
+  return `https://raw.githubusercontent.com/gogoday/chinese-poetry/master/json/cn.poet.${type}.${index}000.json`
 }
 
 async function getDataFromFileSys() {
@@ -42,7 +42,7 @@ async function getDataFromFileSys() {
 
   const content = await app
   .downloadFile({
-    fileID: `cloud://hello-cloudbase-1gjrribi96ea328d.6865-hello-cloudbase-1gjrribi96ea328d-1251036730/json/poet.${type}.${index}000.json`
+    fileID: `cloud://hello-cloudbase-1gjrribi96ea328d.6865-hello-cloudbase-1gjrribi96ea328d-1251036730/json/cn.poet.${type}.${index}000.json`
   })
   .then((res) => {
     // fileContent 类型为 Buffer
