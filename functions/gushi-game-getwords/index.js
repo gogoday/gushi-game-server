@@ -1,4 +1,4 @@
-
+const { performance } = require('perf_hooks');
 const https = require('https');
 const cloudbase = require('@cloudbase/node-sdk')
 
@@ -108,7 +108,9 @@ exports.main = async (event, context) => {
     return { ret: 3 }
   }
   const url = getRandomUrl();
+  const start = performance.now();
   const result = await getDataFromUrl(url);
+  console.info(`get data cost: ${performance.now() - start} ms`);
   const words = this.getARandomWordFromArrayList(result);
   const handleResult = handleWorld(words);
 

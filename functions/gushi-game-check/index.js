@@ -20,7 +20,7 @@ exports.main = async (event, context) => {
     return { ret: 2 }
   }
   console.log(event.body)
-  const { userId, select, create_time } = JSON.parse(JSON.parse(event.body));
+  const { userId, select, create_time } = JSON.parse(event.body);
   if (!userId || !create_time || !select) {
     return { ret: 3}
   }
