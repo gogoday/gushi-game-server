@@ -1,5 +1,12 @@
 
 const https = require('https');
+const cloudbase = require('@cloudbase/node-sdk')
+
+const app = cloudbase.init({})
+
+
+// 1. 获取数据库引用
+var db = app.database()
 
 Array.prototype.shuffle = function() {
   var array = this;
@@ -80,7 +87,8 @@ function handleWorld(words) {
     }
   }
 
-  // words.deleteWolds = deleteWolds.slice();
+  words.deleteWolds = deleteWolds.slice();
+  // 生成是否有唯一key
   words.wrongSort = deleteWolds.shuffle();
 
   delete words.id;
@@ -91,12 +99,23 @@ function handleWorld(words) {
 
 
 
-exports.main = async () => {
-
+exports.main = async (event, context) => {
+  const { userId } = event.queryStringParameters;
   const url = getRandomUrl();
   const result = await getDataFromUrl(url);
   const words = this.getARandomWordFromArrayList(result);
   const handleResult = handleWorld(words);
+
+  const record = {
+    userId,
+    create_time: Date.now(),
+    ...words,
+  }
+  console.log(record)
+  const res = await db.collection('gushi')
+    .add(record)
+  delete words.deleteWolds;
+  
   return handleResult ? {
     ret: 0,
     data: words
